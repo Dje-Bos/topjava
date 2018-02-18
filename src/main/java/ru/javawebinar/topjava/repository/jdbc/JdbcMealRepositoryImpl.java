@@ -2,7 +2,6 @@ package ru.javawebinar.topjava.repository.jdbc;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.support.DataAccessUtils;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -86,8 +85,9 @@ public class JdbcMealRepositoryImpl implements MealRepository {
 
     @Override
     public List<Meal> getBetween(LocalDateTime startDate, LocalDateTime endDate, int userId) {
-        return jdbcTemplate.query("SELECT * FROM topjava.public.meals WHERE datetime BETWEEN  ?::date AND ?::date AND user_id = ? ORDER BY datetime DESC ",
-                ROW_MAPPER, startDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss")),
-                endDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss")), userId);
+        return jdbcTemplate.query("SELECT * FROM (SELECT * FROM topjava.public.meals WHERE datetime BETWEEN  ?::timestamp AND ?::timestamp) as m2 WHERE m2.user_id = ? ORDER BY datetime DESC",
+//                ROW_MAPPER, startDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss")), doesn't work. debug later
+//                endDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss")), userId);
+                ROW_MAPPER, startDate.toString(), endDate.toString(), userId);
     }
 }

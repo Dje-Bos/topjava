@@ -56,7 +56,9 @@ public class MealServiceImplTest {
 
     @Test
     public void getBetweenDateTimes() {
-        MATCHER.assertCollectionEquals(Arrays.asList(ADMIN_MEAL_3, ADMIN_MEAL_2, ADMIN_MEAL_1), service.getBetweenDateTimes(LocalDateTime.parse("2018-06-12T00:45:00"), LocalDateTime.parse("2018-06-13T00:45:00"), UserTestData.ADMIN_ID));
+        MATCHER.assertCollectionEquals(Arrays.asList(ADMIN_MEAL_3, ADMIN_MEAL_2),
+                service.getBetweenDateTimes(LocalDateTime.parse("2018-06-12T10:45:00"),
+                        LocalDateTime.parse("2018-06-13T00:45:00"), UserTestData.ADMIN_ID));
     }
 
     @Test
