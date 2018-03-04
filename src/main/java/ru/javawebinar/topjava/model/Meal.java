@@ -1,19 +1,40 @@
 package ru.javawebinar.topjava.model;
 
-import javax.persistence.FetchType;
-import javax.persistence.ManyToOne;
+import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.Range;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-
+@NamedQueries({
+        @NamedQuery(name = "delete", query = "Delete From Meal m Where m.user.id = :userId and m.id = :id"),
+        @NamedQuery(name = "getAll", query = "SELECT m FROM Meal m WHERE m.user.id = :userId order by m.dateTime desc "),
+        @NamedQuery(name = "getBetween", query = "SELECT m FROM Meal m WHERE m.user.id = :userId and m.dateTime between :start and :end order by m.dateTime desc"),
+        @NamedQuery(name = "get", query = "select m from Meal m WHERE m.user.id = :userId and m.id = :id"),
+        @NamedQuery(name = "update", query = "update Meal set calories = :calories, dateTime = :datetime, description = :description WHERE user.id = :userId and id = :id")
+}
+)
+@Entity
+@Table(name = "meals", indexes = @Index(name = "meals_unique_user_datetime_idx", unique = true, columnList = "user_id, date_time"))
 public class Meal extends BaseEntity {
+
+    @Column(name = "date_time", nullable = false)
+    @NotNull
     private LocalDateTime dateTime;
 
+    @Column(name = "description")
+    @NotBlank
     private String description;
 
+    @Column(name = "calories", nullable = false, columnDefinition = "integer default 2000")
+    @Range(min = 0, max = 10000)
     private int calories;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    @NotNull
     private User user;
 
     public Meal() {
