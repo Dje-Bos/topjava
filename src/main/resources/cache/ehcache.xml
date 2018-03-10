@@ -14,8 +14,9 @@
             overflowToDisk="true"
             diskPersistent="false"
             diskExpiryThreadIntervalSeconds="120"
-            memoryStoreEvictionPolicy="LRU"/>
-
+            memoryStoreEvictionPolicy="LRU"
+            maxEntriesLocalHeap="10000"
+    />
     <cache name="users"
            timeToLiveSeconds="60"
            maxElementsInMemory="1000"
@@ -25,5 +26,17 @@
            diskPersistent="false"
            diskExpiryThreadIntervalSeconds="1"
            memoryStoreEvictionPolicy="LRU"/>
+    <!--broken cache-->
+    <!--<cache name="meals">-->
+    <!--timeToLiveSeconds="60"-->
+    <!--maxElementsInMemory="1000"-->
+    <!--eternal="false"-->
+    <!--overflowToDisk="false"-->
+    <!--maxElementsOnDisk="10000000"-->
+    <!--diskPersistent="false"-->
+    <!--diskExpiryThreadIntervalSeconds="1"-->
+    <!--memoryStoreEvictionPolicy="LRU"-->
+
+    <!--</cache>-->
 
 </ehcache>

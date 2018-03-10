@@ -1,6 +1,5 @@
 package ru.javawebinar.topjava.web;
 
-import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.web.meal.MealRestController;
@@ -22,13 +21,18 @@ import static ru.javawebinar.topjava.util.DateTimeUtil.parseLocalTime;
 
 public class MealServlet extends HttpServlet {
 
-    private ConfigurableApplicationContext springContext;
+    private ClassPathXmlApplicationContext springContext;
     private MealRestController mealController;
 
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
-        springContext = new ClassPathXmlApplicationContext("spring/spring-app.xml", "spring/spring-db.xml");
+        //change to ClassPathXmlAppContext because that class has setConfigLocation
+        springContext = new ClassPathXmlApplicationContext();
+        springContext.setConfigLocations("spring/spring-app.xml", "spring/spring-db.xml");
+        //set spring profiles
+        springContext.getEnvironment().setActiveProfiles("postgres", "datajpa");
+        springContext.refresh();
         mealController = springContext.getBean(MealRestController.class);
     }
 

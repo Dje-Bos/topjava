@@ -26,6 +26,7 @@ public class MealServiceImpl implements MealService {
         return checkNotFoundWithId(repository.get(id, userId), id);
     }
 
+    //   @CacheEvict("meals")
     @Override
     public void delete(int id, int userId) {
         checkNotFoundWithId(repository.delete(id, userId), id);
@@ -38,19 +39,26 @@ public class MealServiceImpl implements MealService {
         return repository.getBetween(startDateTime, endDateTime, userId);
     }
 
+    //    @Cacheable("meals")
     @Override
     public List<Meal> getAll(int userId) {
         return repository.getAll(userId);
     }
 
+    //    @CacheEvict("meals")
     @Override
     public Meal update(Meal meal, int userId) {
         return checkNotFoundWithId(repository.save(meal, userId), meal.getId());
     }
 
+    //    @CacheEvict("meals")
     @Override
     public Meal create(Meal meal, int userId) {
         Assert.notNull(meal, "meal must not be null");
         return repository.save(meal, userId);
+    }
+
+    //    @CacheEvict("meals")
+    public void evictCache() {
     }
 }
