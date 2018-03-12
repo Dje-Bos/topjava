@@ -86,4 +86,9 @@ public class JdbcMealRepositoryImpl implements MealRepository {
                 "SELECT * FROM meals WHERE user_id=?  AND date_time BETWEEN ?  AND ? ORDER BY date_time DESC",
                 ROW_MAPPER, userId, Timestamp.valueOf(startDate), Timestamp.valueOf(endDate));
     }
+
+    @Override
+    public List<Meal> getAllWithUser(int userId) {
+        throw new UnsupportedOperationException();
+    }
 }

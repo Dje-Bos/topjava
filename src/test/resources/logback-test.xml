@@ -23,9 +23,10 @@
 
     <!--<logger name="org.postgresql" level="debug"/>-->
     <!--<logger name="org.springframework.jdbc" level="debug"/>-->
-
+    <!--<logger name="org.hibernate.transaction.JDBCTransaction" level="DEBUG"/>-->
+    <!--<logger name="org.hibernate.jdbc.ConnectionManager" level="DEBUG"/>-->
+    <logger name="org.springframework.orm.jpa.JpaTransactionManager" level="DEBUG"/>
     <logger name="ru.javawebinar.topjava" level="debug"/>
-
     <root level="INFO">
         <appender-ref ref="console"/>
     </root>

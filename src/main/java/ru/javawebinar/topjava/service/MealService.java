@@ -26,4 +26,6 @@ public interface MealService {
     Meal create(Meal meal, int userId);
 
     void evictCache();
+
+    List<Meal> getAllWithUser(int userID);
 }

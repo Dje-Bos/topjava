@@ -58,7 +58,13 @@ public class MealServiceImpl implements MealService {
         return repository.save(meal, userId);
     }
 
+    @Override
     //    @CacheEvict("meals")
     public void evictCache() {
+    }
+
+    @Override
+    public List<Meal> getAllWithUser(int userID) {
+        return repository.getAllWithUser(userID);
     }
 }

@@ -85,6 +85,11 @@ public class InMemoryMealRepositoryImpl implements MealRepository {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public List<Meal> getAllWithUser(int userId) {
+        throw new UnsupportedOperationException();
+    }
+
     private Stream<Meal> getAllAsStream(int userId) {
         Map<Integer, Meal> meals = repository.get(userId);
         return meals == null ?
