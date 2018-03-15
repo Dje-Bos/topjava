@@ -1,9 +1,11 @@
 package ru.javawebinar.topjava.service;
 
-import org.junit.AfterClass;
+import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.rules.ExpectedException;
+import org.junit.rules.ExternalResource;
 import org.junit.rules.Stopwatch;
+import org.junit.rules.TestRule;
 import org.junit.runner.Description;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -49,13 +51,20 @@ public abstract class AbstractServiceTest {
         }
     };
 
-    @AfterClass
-    public static void printResult() {
-        resultLog.info("\n---------------------------------" +
-                "\nTest                 Duration, ms" +
-                "\n---------------------------------\n" +
-                results +
-                "---------------------------------\n");
+    @ClassRule
+    public static TestRule getRule() {
+        return new ExternalResource() {
+            @Override
+            protected void after() {
+                resultLog.info("\n---------------------------------" +
+                        "\nTest                 Duration, ms" +
+                        "\n---------------------------------\n" +
+                        results +
+                        "---------------------------------\n");
+                results.trimToSize();
+                results.delete(0, results.capacity());
+            }
+        };
     }
 
     abstract void testDelete() throws Exception;
