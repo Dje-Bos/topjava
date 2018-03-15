@@ -4,6 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import ru.javawebinar.topjava.MealTestData;
 import ru.javawebinar.topjava.model.Role;
 import ru.javawebinar.topjava.model.User;
 import ru.javawebinar.topjava.util.exception.NotFoundException;
@@ -17,7 +18,7 @@ import static ru.javawebinar.topjava.UserTestData.*;
 public abstract class UserServiceTest extends AbstractServiceTest {
 
     @Autowired
-    private UserService service;
+    protected UserService service;
 
     @Before
     public void setUp() throws Exception {
@@ -76,6 +77,7 @@ public abstract class UserServiceTest extends AbstractServiceTest {
         User updated = new User(USER);
         updated.setName("UpdatedName");
         updated.setCaloriesPerDay(330);
+        updated.setMeals(MealTestData.MEALS);
         service.update(updated);
         MATCHER.assertEquals(updated, service.get(USER_ID));
     }

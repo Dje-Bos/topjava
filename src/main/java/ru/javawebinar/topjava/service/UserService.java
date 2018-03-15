@@ -21,4 +21,8 @@ public interface UserService {
     void evictCache();
 
     List<User> getAll();
+
+    default User getWithMeal(int userID) {
+        throw new UnsupportedOperationException();
+    }
 }
