@@ -42,6 +42,20 @@ public abstract class JdbcMealRepositoryImpl<T> implements MealRepository {
     }
 
     @Override
+    public boolean delete(int id, int userId) {
+        return jdbcTemplate.update("DELETE FROM meals WHERE id=? AND user_id=?", id, userId) != 0;
+    }
+
+    @Repository
+    @Profile(Profiles.POSTGRES_DB)
+    public static class Java8JdbcMealRepositoryImpl extends JdbcMealRepositoryImpl<LocalDateTime> {
+        @Override
+        protected LocalDateTime toDbDateTime(LocalDateTime ldt) {
+            return ldt;
+        }
+    }
+
+    @Override
     public Meal save(Meal meal, int userId) {
         MapSqlParameterSource map = new MapSqlParameterSource()
                 .addValue("id", meal.getId())
@@ -73,17 +87,13 @@ public abstract class JdbcMealRepositoryImpl<T> implements MealRepository {
     }
 
     @Repository
-    @Profile(Profiles.POSTGRES_DB)
-    public static class Java8JdbcMealRepositoryImpl extends JdbcMealRepositoryImpl<LocalDateTime> {
-        @Override
-        protected LocalDateTime toDbDateTime(LocalDateTime ldt) {
-            return ldt;
-        }
-    }
+    @Profile(Profiles.HSQL_DB)
+    public static class TimestampJdbcMealRepositoryImpl extends JdbcMealRepositoryImpl<Timestamp> {
 
-    @Override
-    public boolean delete(int id, int userId) {
-        return jdbcTemplate.update("DELETE FROM meals WHERE id=? AND user_id=?", id, userId) != 0;
+        @Override
+        protected Timestamp toDbDateTime(LocalDateTime ldt) {
+            return Timestamp.valueOf(ldt);
+        }
     }
 
     @Override
@@ -97,15 +107,5 @@ public abstract class JdbcMealRepositoryImpl<T> implements MealRepository {
     public List<Meal> getAll(int userId) {
         return jdbcTemplate.query(
                 "SELECT * FROM meals WHERE user_id=? ORDER BY date_time DESC", ROW_MAPPER, userId);
-    }
-
-    @Repository
-    @Profile(Profiles.HSQL_DB)
-    public static class TimestampJdbcMealRepositoryImpl extends JdbcMealRepositoryImpl<Timestamp> {
-
-        @Override
-        protected Timestamp toDbDateTime(LocalDateTime ldt) {
-            return Timestamp.valueOf(ldt);
-        }
     }
 }
