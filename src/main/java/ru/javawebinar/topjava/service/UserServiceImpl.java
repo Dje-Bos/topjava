@@ -26,7 +26,7 @@ public class UserServiceImpl implements UserService {
 
     @CacheEvict(value = "users", allEntries = true)
     @Override
-    public User create(User user) {
+    public User save(User user) {
         Assert.notNull(user, "user must not be null");
         return repository.save(user);
     }
