@@ -30,7 +30,7 @@ public abstract class AbstractUserController {
     public User create(User user) {
         log.info("create {}", user);
         checkNew(user);
-        return service.save(user);
+        return service.create(user);
     }
 
     public void delete(int id) {
