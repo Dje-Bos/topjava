@@ -1,12 +1,17 @@
 package ru.javawebinar.topjava;
 
+import org.springframework.test.web.servlet.ResultMatcher;
 import ru.javawebinar.topjava.matcher.BeanMatcher;
 import ru.javawebinar.topjava.model.Role;
 import ru.javawebinar.topjava.model.User;
 
+import java.util.Arrays;
 import java.util.Objects;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static ru.javawebinar.topjava.model.AbstractBaseEntity.START_SEQ;
+import static ru.javawebinar.topjava.web.json.JsonUtil.writeIgnoreProps;
 
 public class UserTestData {
     public static final int USER_ID = START_SEQ;
@@ -26,4 +31,24 @@ public class UserTestData {
                             && Objects.equals(expected.getRoles(), actual.getRoles())
                     )
     );
+
+    public static void assertMatch(Iterable<User> actual, Iterable<User> expected) {
+        assertThat(actual).usingElementComparatorIgnoringFields("registered", "meals").isEqualTo(expected);
+    }
+
+    public static void assertMatch(User actual, User expected) {
+        assertThat(actual).isEqualToIgnoringGivenFields(expected, "registered", "meals");
+    }
+
+    public static void assertMatch(Iterable<User> actual, User... expected) {
+        assertMatch(actual, Arrays.asList(expected));
+    }
+
+    public static ResultMatcher contentJson(User... expected) {
+        return content().json(writeIgnoreProps(Arrays.asList(expected), "registered"));
+    }
+
+    public static ResultMatcher contentJson(User expected) {
+        return content().json(writeIgnoreProps(expected, "registered"));
+    }
 }
