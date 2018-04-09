@@ -6,8 +6,34 @@
        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
     <bean class="ru.javawebinar.topjava.web.json.JacksonObjectMapper" id="objectMapper" factory-method="getMapper"/>
+    <!--<bean id="conversionService"-->
+    <!--class="org.springframework.context.support.ConversionServiceFactoryBean">-->
+    <!--<property name="converters">-->
+    <!--<set>-->
+    <!--<bean class="ru.javawebinar.topjava.LocalDateConverter"/>-->
+    <!--</set>-->
+    <!--</property>-->
+    <!--</bean>-->
+    <bean id="conversionService"
+          class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
+        <property name="registerDefaultFormatters" value="false"/>
+        <property name="formatters">
+            <list>
+                <bean class="ru.javawebinar.topjava.LocalDateFormatter"/>
+                <bean class="ru.javawebinar.topjava.LocalTimeFormatter"/>
+            </list>
 
-    <mvc:annotation-driven>
+        </property>
+        <!--<property name="converters">-->
+        <!--<set><bean class="ru.javawebinar.topjava.LocalDateConverter"/> </set>-->
+        <!--</property>-->
+        <!--<property name="formatterRegistrars">-->
+        <!--<set>-->
+        <!--<bean class="org.example.MyFormatterRegistrar"/>-->
+        <!--</set>-->
+        <!--</property>-->
+    </bean>
+    <mvc:annotation-driven conversion-service="conversionService">
         <mvc:message-converters>
             <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
                 <property name="objectMapper" ref="objectMapper"/>

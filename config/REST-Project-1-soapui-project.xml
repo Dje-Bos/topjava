@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-project xmlns:con="http://eviware.com/soapui/config" id="0f8932ad-52e5-4765-9103-0dc4605f39cc"
+                    activeEnvironment="Default" name="REST Project 1" soapui-version="5.4.0" abortOnError="false"
+                    runType="SEQUENTIAL">
+    <con:settings/>
+    <con:interface xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="con:RestService"
+                   id="c4fd25bf-49b8-4d93-9cd8-54428709033c" wadlVersion="http://wadl.dev.java.net/2009/02"
+                   name="http://localhost:8080" type="rest">
+        <con:settings/>
+        <con:definitionCache/>
+        <con:endpoints>
+            <con:endpoint>http://localhost:8080</con:endpoint>
+        </con:endpoints>
+        <con:resource name="Topjava" path="/topjava" id="4e9703aa-4f70-4229-af4b-73125d44c601">
+            <con:settings/>
+            <con:parameters/>
+            <con:method name="Topjava 1" id="01923077-026f-4f26-acca-645d098fd305" method="GET">
+                <con:settings/>
+                <con:parameters/>
+                <con:request name="Request 1" id="2f2577bb-3bb3-415a-aac7-8051ad763fa1" mediaType="application/json">
+                    <con:settings/>
+                    <con:endpoint>http://localhost:8080</con:endpoint>
+                    <con:request/>
+                    <con:credentials>
+                        <con:authType>No Authorization</con:authType>
+                    </con:credentials>
+                    <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+                    <con:jmsPropertyConfig/>
+                    <con:parameters/>
+                </con:request>
+            </con:method>
+        </con:resource>
+    </con:interface>
+    <con:properties/>
+    <con:wssContainer/>
+    <con:oAuth2ProfileContainer/>
+    <con:oAuth1ProfileContainer/>
+</con:soapui-project>

@@ -1,13 +1,16 @@
 package ru.javawebinar.topjava;
 
+import org.springframework.test.web.servlet.ResultMatcher;
 import ru.javawebinar.topjava.matcher.BeanMatcher;
 import ru.javawebinar.topjava.model.Meal;
+import ru.javawebinar.topjava.web.json.JsonUtil;
 
 import java.time.Month;
 import java.util.Arrays;
 import java.util.List;
 
 import static java.time.LocalDateTime.of;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static ru.javawebinar.topjava.model.AbstractBaseEntity.START_SEQ;
 
 public class MealTestData {
@@ -34,5 +37,9 @@ public class MealTestData {
 
     public static Meal getUpdated() {
         return new Meal(MEAL1_ID, MEAL1.getDateTime(), "Обновленный завтрак", 200);
+    }
+
+    public static <T> ResultMatcher jsonContent(T expected) {
+        return content().json(JsonUtil.writeValue(expected));
     }
 }
