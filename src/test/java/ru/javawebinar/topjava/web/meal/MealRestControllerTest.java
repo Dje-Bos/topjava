@@ -19,7 +19,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static ru.javawebinar.topjava.MealTestData.*;
 import static ru.javawebinar.topjava.UserTestData.USER;
-import static ru.javawebinar.topjava.model.BaseEntity.START_SEQ;
+import static ru.javawebinar.topjava.model.AbstractBaseEntity.START_SEQ;
 
 public class MealRestControllerTest extends AbstractControllerTest {
 
@@ -41,7 +41,7 @@ public class MealRestControllerTest extends AbstractControllerTest {
     public void testDelete() throws Exception {
         mockMvc.perform(delete(REST_URL + MEAL1_ID).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
-        MATCHER.assertCollectionEquals(Arrays.asList(MEAL6, MEAL5, MEAL4, MEAL3, MEAL2), service.getAll(START_SEQ));
+        MATCHER.assertListEquals(Arrays.asList(MEAL6, MEAL5, MEAL4, MEAL3, MEAL2), service.getAll(START_SEQ));
     }
 
     @Test
@@ -66,7 +66,7 @@ public class MealRestControllerTest extends AbstractControllerTest {
         created.setId(returned.getId());
 
         MATCHER.assertEquals(created, returned);
-        MATCHER.assertCollectionEquals(Arrays.asList(created, MEAL6, MEAL5, MEAL4, MEAL3, MEAL2, MEAL1), service.getAll(START_SEQ));
+        MATCHER.assertListEquals(Arrays.asList(created, MEAL6, MEAL5, MEAL4, MEAL3, MEAL2, MEAL1), service.getAll(START_SEQ));
     }
 
     @Test
@@ -86,5 +86,26 @@ public class MealRestControllerTest extends AbstractControllerTest {
                 .andExpect(MATCHER_WITH_EXCEED.contentListMatcher(
                         MealsUtil.createWithExceed(MEAL4, true),
                         MealsUtil.createWithExceed(MEAL1, false)));
+    }
+
+    @Test
+    public void testFilter() throws Exception {
+        mockMvc.perform(get(REST_URL + "filter")
+                .param("startDate", "2015-05-30").param("startTime", "07:00")
+                .param("endDate", "2015-05-31").param("endTime", "11:00"))
+                .andExpect(status().isOk())
+                .andDo(print())
+                .andExpect(MATCHER_WITH_EXCEED.contentListMatcher(
+                        MealsUtil.createWithExceed(MEAL4, true),
+                        MealsUtil.createWithExceed(MEAL1, false)));
+    }
+
+    @Test
+    public void testFilterAll() throws Exception {
+        mockMvc.perform(get(REST_URL + "filter?startDate=&endTime="))
+                .andExpect(status().isOk())
+                .andDo(print())
+                .andExpect(MATCHER_WITH_EXCEED.contentListMatcher(
+                        MealsUtil.getWithExceeded(Arrays.asList(MEAL6, MEAL5, MEAL4, MEAL3, MEAL2, MEAL1), USER.getCaloriesPerDay())));
     }
 }
