@@ -17,13 +17,6 @@ public abstract class AbstractUserController {
     @Autowired
     protected UserService service;
 
-    public AbstractUserController() {
-    }
-
-    public AbstractUserController(UserService service) {
-        this.service = service;
-    }
-
     public List<User> getAll() {
         log.info("getAll");
         return service.getAll();

@@ -30,13 +30,3 @@ header, footer {
     padding: 5px 20px;
     margin: 6px 0;
 }
-
-#mealsTable {
-    width: 100%;
-}
-
-.row {
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-}

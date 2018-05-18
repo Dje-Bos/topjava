@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <con:soapui-project xmlns:con="http://eviware.com/soapui/config" activeEnvironment="Default" name="Topjava"
-                    resourceRoot="" soapui-version="5.4.0" abortOnError="false" runType="SEQUENTIAL"
+                    resourceRoot="" soapui-version="5.2.0" abortOnError="false" runType="SEQUENTIAL"
                     id="b6a174fe-9cda-4410-af25-bdf04e1fed39">
     <con:settings/>
     <con:interface xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="con:RestService"
@@ -417,7 +417,7 @@
                 <con:parameters/>
                 <con:representation type="FAULT">
                     <con:mediaType>text/html;charset=utf-8</con:mediaType>
-                    <con:status>400 401</con:status>
+                    <con:status>400</con:status>
                     <con:params/>
                     <con:element>html</con:element>
                 </con:representation>
@@ -445,18 +445,14 @@
                     </con:settings>
                     <con:endpoint>http://localhost:8080</con:endpoint>
                     <con:request>{
-                        "dateTime": "2015-06-01T10:00",
+                        "dateTime": "2015-06-01 10:00",
                         "description": "Новый завтрак",
                         "calories": 777
                         }
                     </con:request>
                     <con:originalUri>http://localhost/topjava/rest/profile/meals</con:originalUri>
                     <con:credentials>
-                        <con:username>user@yandex.ru</con:username>
-                        <con:password>password</con:password>
-                        <con:selectedAuthProfile>Basic</con:selectedAuthProfile>
-                        <con:addedBasicAuthenticationTypes>Basic</con:addedBasicAuthenticationTypes>
-                        <con:authType>Global HTTP Settings</con:authType>
+                        <con:authType>No Authorization</con:authType>
                     </con:credentials>
                     <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
                     <con:jmsPropertyConfig/>
@@ -655,6 +651,5 @@
     <con:properties/>
     <con:wssContainer/>
     <con:oAuth2ProfileContainer/>
-    <con:oAuth1ProfileContainer/>
     <con:sensitiveInformation/>
 </con:soapui-project>
