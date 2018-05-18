@@ -10,7 +10,7 @@ import ru.javawebinar.topjava.service.UserService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/ajax/admin/users")
+@RequestMapping("/ajax/admin/users/")
 public class AdminAjaxController extends AbstractUserController {
 
     @Autowired
@@ -42,5 +42,15 @@ public class AdminAjaxController extends AbstractUserController {
         } else {
             super.update(user, id);
         }
+    }
+
+    @PostMapping("/{id}")
+    public void changeState(@PathVariable("id") Integer id) {
+        User user = super.get(id);
+        if (user.isEnabled())
+            user.setEnabled(false);
+        else
+            user.setEnabled(true);
+        super.update(user, id);
     }
 }
