@@ -15,7 +15,7 @@ public class AdminAjaxController extends AbstractUserController {
 
     @Autowired
     public AdminAjaxController(UserService service) {
-        super(service);
+        super.service = service;
     }
 
     @Override
