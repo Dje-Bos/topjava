@@ -44,7 +44,7 @@
                                        onclick="enable($(this), ${user.id})"/>
                             </td>
                             <td><fmt:formatDate value="${user.registered}" pattern="dd-MMMM-yyyy"/></td>
-                            <td><a>
+                            <td><a onclick=updateRow(${user.id})>
                                 <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                             </a></td>
                             <td><a onclick="deleteRow(${user.id})">
