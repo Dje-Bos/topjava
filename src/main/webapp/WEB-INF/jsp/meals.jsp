@@ -55,6 +55,9 @@
                                 <a class="btn btn-danger" type="button" onclick="clearFilter()">
                                     <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
                                 </a>
+                                <a class="btn btn-primary" type="button" onclick="updateTable()">
+                                    <span class="glyphicon glyphicon-glass" aria-hidden="true"></span>
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -147,5 +150,14 @@
         </div>
     </div>
 </div>
+<script type="text/javascript">
+    var i18n = [];
+    i18n["addTitle"] = '<spring:message code="meals.add"/>';
+    i18n["editTitle"] = '<spring:message code="meals.edit"/>';
+
+    <c:forEach var='key' items='<%=new String[]{"common.deleted","common.saved","common.enabled","common.disabled","common.errorStatus"}%>'>
+    i18n['${key}'] = '<spring:message code="${key}"/>';
+    </c:forEach>
+</script>
 </body>
 </html>
